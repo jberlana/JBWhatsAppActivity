@@ -1,6 +1,6 @@
 # JBWhatsAppActivity
 
-JBWhatsAppActivity is a subclass of UIActivity .
+JBWhatsAppActivity is a UIActivity subclass that provides an “Share in WhatsApp" action to a UIActivityViewController.
 
 ## Installation
 * Drag JBWhatsAppActivity.h .m and whatsapp.png files into your project.

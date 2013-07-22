@@ -5,6 +5,11 @@ JBWhatsAppActivity is a UIActivity subclass that provides an “Share in WhatsAp
 ## Installation
 * Drag JBWhatsAppActivity.h .m and whatsapp.png files into your project.
 
+## Features
+* If a message and an ABID is provided, JBWhatsAppActivity sends a direct message to a contact.
+* If just a message is defined, JBWhatsAppActivity opens WhatsApp contact picker to select a receiver.
+* If no message and ABID is provided, then JBWhatsAppActivity just open WhatsApp.
+
 ## Usage
 (see example Xcode project in /DemoProject)
 

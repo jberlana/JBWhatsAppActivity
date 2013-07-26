@@ -26,12 +26,15 @@
 
 @interface JBWhatsAppActivity : UIActivity
 
++ (BOOL)canShareOnWhatsApp;
+
 @end
 
 @interface WhatsAppMessage : NSObject
 
 @property (nonatomic, strong, readonly) NSString *text;
 @property (nonatomic, strong, readonly) NSString *abid;
+
 
 - (id)initWithMessage:(NSString *)message forABID:(NSString *)abid;
 

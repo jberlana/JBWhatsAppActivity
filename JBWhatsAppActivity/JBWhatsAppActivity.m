@@ -24,6 +24,8 @@
 
 #import "JBWhatsAppActivity.h"
 
+NSString* const WhatsAppHandlerURL = @"whatsapp://";
+
 @interface JBWhatsAppActivity ()
 
 @property (nonatomic, strong) WhatsAppMessage *message;
@@ -32,6 +34,12 @@
 
 
 @implementation JBWhatsAppActivity
+
++ (BOOL)canShareOnWhatsApp
+{
+    NSURL* url = [NSURL URLWithString:WhatsAppHandlerURL];
+    return [[UIApplication sharedApplication] canOpenURL:url];
+}
 
 - (NSString *)activityType {
     return @"es.sweetbits.WHATSAPP";
@@ -64,14 +72,14 @@
     {
         if ([activityItem isKindOfClass:[WhatsAppMessage class]])
         {
-            NSString *url = @"whatsapp://";
+            NSString* url = WhatsAppHandlerURL;
             
             if (_message.text)
             {
-                url = [NSString stringWithFormat:@"%@send?text=%@",url,_message.text];
+                url = [NSString stringWithFormat:@"%@send?text=%@", url,_message.text];
                 
                 if (_message.abid) {
-                    url = [NSString stringWithFormat:@"%@&abid=%@",url,_message.abid];
+                    url = [NSString stringWithFormat:@"%@&abid=%@", url,_message.abid];
                 }
             }
             

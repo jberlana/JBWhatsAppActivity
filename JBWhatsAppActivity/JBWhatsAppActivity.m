@@ -47,12 +47,31 @@
     return @"WhatsApp";
 }
 
+- (NSURL *)getURLFromMessage:(WhatsAppMessage *)message
+{
+    NSString *url = @"whatsapp://";
+    
+    if (_message.text)
+    {
+        url = [NSString stringWithFormat:@"%@send?text=%@",url,_message.text];
+        
+        if (_message.abid) {
+            url = [NSString stringWithFormat:@"%@&abid=%@",url,_message.abid];
+        }
+    }
+    
+    return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+}
+
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
 {
-    for (id activityItem in activityItems) {
-        if ([activityItem isKindOfClass:[WhatsAppMessage class]]) {
+    for (id activityItem in activityItems)
+    {
+        if ([activityItem isKindOfClass:[WhatsAppMessage class]])
+        {
             self.message = activityItem;
-            return YES;
+            NSURL *whatsAppURL = [self getURLFromMessage:_message];
+            return [[UIApplication sharedApplication] canOpenURL: whatsAppURL];
         }
     }
     return NO;
@@ -64,20 +83,10 @@
     {
         if ([activityItem isKindOfClass:[WhatsAppMessage class]])
         {
-            NSString *url = @"whatsapp://";
+            NSURL *whatsAppURL = [self getURLFromMessage:_message];
             
-            if (_message.text)
-            {
-                url = [NSString stringWithFormat:@"%@send?text=%@",url,_message.text];
-                
-                if (_message.abid) {
-                    url = [NSString stringWithFormat:@"%@&abid=%@",url,_message.abid];
-                }
-            }
-            
-            NSURL *WhatsAppURL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            if ([[UIApplication sharedApplication] canOpenURL: WhatsAppURL]) {
-                [[UIApplication sharedApplication] openURL: WhatsAppURL];
+            if ([[UIApplication sharedApplication] canOpenURL: whatsAppURL]) {
+                [[UIApplication sharedApplication] openURL: whatsAppURL];
             }
             
             break;

@@ -126,11 +126,13 @@
     return [self stringByEncodingString:_text];
 }
 
-- (NSString *)abid {
+- (NSString *)abid
+{
     return [self stringByEncodingString:_abid];
 }
 
-- (NSString *)stringByEncodingString:(NSString *)string {
+- (NSString *)stringByEncodingString:(NSString *)string
+{
     CFStringRef encodedString = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
                                                                         (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
     return CFBridgingRelease(encodedString);

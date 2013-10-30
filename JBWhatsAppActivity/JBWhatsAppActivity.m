@@ -60,7 +60,7 @@
         }
     }
     
-    return [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    return [NSURL URLWithString:url];
 }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
@@ -99,6 +99,8 @@
 #pragma mark - WhatsAppMessage Class
 
 @implementation WhatsAppMessage
+@synthesize text = _text;
+@synthesize abid = _abid;
 
 - (id)init
 {
@@ -117,6 +119,23 @@
     }
     
     return self;
+}
+
+- (NSString *)text
+{
+    return [self stringByEncodingString:_text];
+}
+
+- (NSString *)abid
+{
+    return [self stringByEncodingString:_abid];
+}
+
+- (NSString *)stringByEncodingString:(NSString *)string
+{
+    CFStringRef encodedString = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)string, NULL,
+                                                                        (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
+    return CFBridgingRelease(encodedString);
 }
 
 @end
